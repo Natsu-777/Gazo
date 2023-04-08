@@ -1,0 +1,146 @@
+.email1,
+.user-name {
+  border: 0;
+  background-color: var(--color-gainsboro-200);
+  border-radius: 7.55px;
+  width: 408.52px;
+  height: 59.65px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+.user-name {
+  font-family: var(--font-iceberg);
+  font-size: 26.43px;
+}
+.email1 {
+  padding: 0.00005190273077460006px var(--padding-0);
+  box-sizing: border-box;
+}
+.confirm,
+.email1,
+.sign-up1 {
+  font-size: 26.43px;
+  font-family: var(--font-iceberg);
+}
+.confirm {
+  border: 0;
+  background-color: var(--color-gainsboro-200);
+  border-radius: 7.55px;
+  width: 408.52px;
+  height: 59.65px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0.000017300906620221213px var(--padding-0);
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+.sign-up1 {
+  align-self: stretch;
+  flex: 1;
+  position: relative;
+  color: var(--color-black);
+  text-align: center;
+  justify-content: center;
+  opacity: 0.5;
+}
+.form,
+.sign-up1,
+.sign-up2,
+.signup {
+  display: flex;
+  align-items: center;
+}
+.signup {
+  cursor: pointer;
+  border: 0;
+  border-radius: 7px;
+  padding: var(--padding-0) var(--padding-0) 10.20449161529541px;
+  background-color: var(--color-gainsboro-200);
+  width: 240.88px;
+  flex-shrink: 0;
+  flex-direction: column;
+  box-sizing: border-box;
+  justify-content: flex-start;
+  font-size: 26.43px;
+  font-family: var(--font-iceberg);
+  position: relative;
+  left: 65px;
+}
+.form,
+.sign-up2 {
+  position: absolute;
+}
+.form {
+  top: calc(50% - 108.56px);
+  left: calc(50% - 289.77px);
+  width: 522.7px;
+  height: 463.74px;
+  flex-direction: column;
+  padding: 15.178074836730957px 69.89884948730469px 15.178074836730957px
+    44.2753791809082px;
+  box-sizing: border-box;
+  justify-content: flex-start;
+  gap: 31.75px;
+}
+.sign-up2 {
+  height: 6.16%;
+  width: 36.4%;
+  top: 28.15%;
+  left: 28.41%;
+  justify-content: center;
+}
+.screenshot-from-2023-03-13-12-1 {
+  position: relative;
+  width: 57.84px;
+  height: 46.27px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+.home-for-talent1 {
+  font-size: 37.76px;
+}
+.gazo-home-container2 {
+  position: relative;
+}
+.heading,
+.title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+.title {
+  position: absolute;
+  top: 89.57px;
+  left: calc(50% - 303.37px);
+  width: 540.84px;
+  height: 64.63px;
+  padding: 3.4014973640441895px var(--padding-0) var(--padding-0);
+  box-sizing: border-box;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 24.94px;
+  font-size: 52.86px;
+  font-family: var(--font-im-fell-great-primer-sc);
+}
+.sign-up {
+  position: relative;
+  width: 100%;
+  height: 832px;
+  overflow: hidden;
+  background-image: url(./public/sign-up@3x.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+  text-align: center;
+  font-size: 37.76px;
+  color: var(--color-black);
+  font-family: var(--font-iceberg);
+}

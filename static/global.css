@@ -1,0 +1,62 @@
+body {
+  margin: 0;
+  line-height: normal;
+}
+
+:root {
+  /* fonts */
+  --font-im-fell-great-primer-sc: "IM FELL Great Primer SC";
+  --font-iceberg: Iceberg;
+  --font-milonga: Milonga;
+  --font-montserrat: Montserrat;
+  --font-ibm-plex-sans: "IBM Plex Sans";
+  --font-manuale: Manuale;
+  --font-manrope: Manrope;
+  --font-merriweather: Merriweather;
+  --font-lateef: Lateef;
+  --font-lakki-reddy: "Lakki Reddy";
+  --font-kiwi-maru: "Kiwi Maru";
+
+  /* font sizes */
+  --font-size-16xl-4: 35.4px;
+  --font-size-5xl-8: 24.8px;
+  --font-size-18xl-8: 37.8px;
+  --font-size-7xl-4: 26.4px;
+  --font-size-8xl-5: 27.5px;
+  --font-size-29xl-1: 48.1px;
+  --font-size-5xs: 8px;
+  --font-size-3xs-7: 9.7px;
+  --font-size-2xs-6: 10.6px;
+  --font-size-xs-4: 11.4px;
+  --font-size-lg-8: 18.8px;
+  --font-size-xs-3: 11.3px;
+  --font-size-11xl-4: 30.4px;
+  --font-size-3xs-9: 9.9px;
+  --font-size-smi-3: 12.3px;
+  --font-size-2xs-2: 10.2px;
+
+  /* Colors */
+  --color-black: #000;
+  --color-white: #fff;
+  --color-gainsboro-100: #e8e3e3;
+  --color-gainsboro-200: #d9d9d9;
+  --color-mintcream: #f0fcf9;
+  --color-snow: #fffbfb;
+  --color-cornflowerblue: #2189d4;
+  --color-darkturquoise: #21bed4;
+  --color-gray-100: rgba(0, 0, 0, 0.2);
+
+  /* Paddings */
+  --padding-base-2: 15.2px;
+  --padding-0: 0px;
+
+  /* border radiuses */
+  --br-5xs-6: 7.6px;
+  --br-6xs-9: 6.9px;
+  --br-mini: 15px;
+  --br-18xl-5: 37.5px;
+  --br-smi-3: 12.3px;
+  --br-20xl-9: 39.9px;
+  --br-mini-2: 14.2px;
+  --br-11xs: 2px;
+}
