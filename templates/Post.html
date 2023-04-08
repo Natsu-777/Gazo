@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <link rel="stylesheet" href="{{url_for('static',filename='global.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static',filename='Post.css')}}" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Iceberg:wght@400&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IM FELL Great Primer SC:wght@400&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM Plex Sans:wght@300&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Milonga:wght@400&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Manuale:wght@400&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Kiwi Maru:wght@300&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Lakki Reddy:wght@400&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Lateef:wght@400&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400&display=swap"
+    />
+  </head>
+  <body>
+    <div class="post19">
+      <div class="pic-upload">
+        <img class="vector-icon94" alt="" src="./static/public/vector73.svg" /><img
+          class="vector-icon95"
+          alt=""
+          src="./static/public/vector74.svg"
+        /><img class="vector-icon96" alt="" src="./static/public/vector75.svg" />
+        <div class="only-pics-allowed">
+          Only pics allowed! (jpg, jpeg, bmp, png)
+        </div>
+        <button class="browse-your-pic-wrapper">
+          <div class="browse-your-pic">Browse Your Pic !</div>
+        </button>
+      </div>
+      <div class="decript">
+        <div class="description">Description</div>
+        <input
+          class="txt-area"
+          type="text"
+          placeholder="Write a few words about your post !"
+        />
+      </div>
+      <button class="submit-post"><div class="submit">Submit</div></button>
+      <div class="navbar4">
+        <div class="topg4"><div class="gazo4">Gazo</div></div>
+        <button class="profile8" id="profile">
+          <div class="profile9">Profile</div>
+          <img class="vector-icon97" alt="" src="./static/public/vector46.svg" /><img
+            class="vector-icon98"
+            alt=""
+            src="./static/public/vector64.svg"
+          /></button
+        ><button class="home8" id="home">
+          <div class="home9">Home</div>
+          <img class="vector-icon99" alt="" src="./static/public/vector56.svg" /><img
+            class="vector-icon100"
+            alt=""
+            src="./static/public/vector76.svg"
+          /></button
+        ><button class="explore9" id="explore">
+          <div class="explore10">Explore</div>
+          <img class="vector-icon101" alt="" src="./static/public/vector50.svg" /><img
+            class="vector-icon102"
+            alt=""
+            src="./static/public/vector66.svg"
+          /></button
+        ><button class="notification5" id="notification">
+          <div class="explore10">Notifications</div>
+          <img
+            class="vector-icon103"
+            alt=""
+            src="./static/public/vector67.svg"
+          /></button
+        ><button class="post20">
+          <div class="explore10">Post</div>
+          <img class="vector-icon104" alt="" src="./static/public/vector68.svg" /><img
+            class="vector-icon105"
+            alt=""
+            src="./static/public/vector62.svg"
+          /><img
+            class="vector-icon106"
+            alt=""
+            src="./static/public/vector69.svg"
+          /></button
+        ><button class="signout4" id="signOut">
+          <div class="sign-out4">Sign Out</div>
+          <img class="vector-icon107" alt="" src="./static/public/vector271.svg" /><img
+            class="vector-icon108"
+            alt=""
+            src="./static/public/vector281.svg"
+          />
+        </button>
+      </div>
+    </div>
+
+    <script>
+      var profile = document.getElementById("profile");
+      if (profile) {
+        profile.addEventListener("click", function (e) {
+          window.location.href = "/profile";
+        });
+      }
+      
+      var home = document.getElementById("home");
+      if (home) {
+        home.addEventListener("click", function (e) {
+          window.location.href = "/home";
+        });
+      }
+      
+      var notification = document.getElementById("notification");
+      if (notification) {
+        notification.addEventListener("click", function (e) {
+          window.location.href = "/notifications";
+        });
+      }
+      
+      var post = document.getElementById("post");
+      if (post) {
+        post.addEventListener("click", function (e) {
+          window.location.href = "/post";
+        });
+      }
+      
+      var explore = document.getElementById("explore");
+      if (explore) {
+        explore.addEventListener("click", function (e) {
+          window.location.href = "/explore";
+        });
+      }
+
+      var signOut = document.getElementById("signOut");
+      if (signOut) {
+        signOut.addEventListener("click", function (e) {
+          window.location.href = "/logout";
+        });
+      }
+      </script>
+  </body>
+</html>
