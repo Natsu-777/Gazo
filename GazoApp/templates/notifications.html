@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Gazo</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="https://img.icons8.com/color/48/null/drawing--v2.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.4.1/minty/bootstrap.min.css">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/home.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.1/css/all.css">
+</head>
+
+<body>
+
+    <!-- Navbar for small devices -->
+    <nav class="navbar position-fixed navbar-light d-flex d-lg-none d-md-none d-xl-none mb-2 w-100">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#dfc" aria-controls="dfc"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="dropdown">
+            <ul class="dropdown-menu" id="dfc">
+                <li><a class="dropdown-item" href="/home/{{current_user.id}}">Home</a></li>
+                <li><a class="dropdown-item" href="/profile/{{current_user.id}}">Profile</a></li>
+                <li><a class="dropdown-item" href="/explore/{{current_user.id}}">Explore</a></li>
+                <li><a class="dropdown-item" href="/post/{{current_user.id}}">New Post</a></li>
+                <li><a class="dropdown-item" href="/notifications/{{current_user.id}}">Notifications</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" data-toggle="modal" data-target="#logoutModal">Signout</a></li>
+            </ul>
+        </div>
+        <a class="navbar-brand mx-auto" href="#"><img src="https://img.icons8.com/color/48/null/drawing--v2.png"
+                style="margin-right: 10px;" /><strong>Gazo</strong></a>
+    </nav>
+
+    <!-- Vertical Navigation Bar -->
+    <div class="sidebar collapse show" id="sidebar">
+        <a href="#" style="padding-bottom: 20px;"><img src="https://img.icons8.com/color/48/null/drawing--v2.png"
+                style="margin-right: 10px;" /><strong>Gazo</strong></a>
+        <a href="/home/{{current_user.id}}"><i class="fa-solid fa-house-chimney" style="margin-right: 5px;"></i>Home</a>
+        <a href="/profile/{{current_user.id}}"><i class="fa-solid fa-user" style="margin-right: 5px;"></i>Profile</a>
+        <a href="/explore/{{current_user.id}}"><i class="fa-solid fa-compass" style="margin-right: 5px;"></i>Explore</a>
+        <a href="/post/{{current_user.id}}"><i class="fa-solid fa-circle-plus" style="margin-right: 5px;"></i>New
+            Post</a>
+        <a href="/notifications/{{current_user.id}}"><i class="fa-solid fa-message"
+                style="margin-right: 5px;"></i>Notifications</a>
+        <a class="signout" data-toggle="modal" data-target="#logoutModal">
+            <i class="fa-solid fa-right-to-bracket fa-rotate-180" style="margin-right: 5px;"></i>Signout
+        </a>
+    </div>
+
+
+    <!-- Logout Modal -->
+    <div class="modal show" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Logout</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to logout?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <a href="/logout" type="button" class="btn btn-primary">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Notifications -->
+    <div class="main">
+        <div class="row notification-container" style="margin-left: auto; margin-right: auto;">
+            <h2 class="text-center pb-2">My Notifications</h2>
+            <p class="dismiss text-right"><a data-user="{{current_user.id}}" id="dismiss-all" href="#">Dimiss All</a>
+            </p>
+            {% for notification in notifications|reverse %}
+            <div class="card notification-card notification-invitation">
+                <div class="card-body">
+                    <table>
+                        <tr>
+                            <td style="width:70%">
+                                <div class="d-flex flex-row align-items-center">
+                                    <button class="btn p-0 mr-3"
+                                        onclick="location.href='/profile/{{notification.user_id}}'">
+                                        <div
+                                            class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo">
+                                            <img src="{{url_for('static', filename=notification.get_user(notification.user_id).profile_pic)}}"
+                                                alt="..." style="object-fit: cover; position: absolute; left: 0;">
+                                        </div>
+                                    </button>
+                                    {% if notification.notif_type == 'follow' %}
+                                    <div class="card-title mt-2"><button class="btn p-0"
+                                            style="font-family: Arial, Helvetica, sans-serif;"
+                                            onclick="location.href='/profile/{{notification.user_id}}'">
+                                            <strong>{{notification.get_user(notification.user_id).username}}</strong>
+                                        </button> started <i>following</i> you
+                                    </div>
+                                    {% elif notification.notif_type == 'star' %}
+                                    <div class="card-title mt-2"><button class="btn p-0"
+                                            style="font-family: Arial, Helvetica, sans-serif;"
+                                            onclick="location.href='/profile/{{notification.user_id}}'">
+                                            <strong>{{notification.get_user(notification.user_id).username}}</strong>
+                                        </button><i> starred</i> your <button class="btn p-0"
+                                            style="font-family: Arial, Helvetica, sans-serif;"
+                                            onclick="location.href='/profile/{{current_user.id}}#post-{{notification.post_id}}'">
+                                            <strong>post</strong>
+                                        </button>
+                                    </div>
+                                    {% elif notification.notif_type == 'reshare' %}
+                                    <div class="card-title mt-2"><button class="btn p-0"
+                                            style="font-family: Arial, Helvetica, sans-serif;"
+                                            onclick="location.href='/profile/{{notification.user_id}}'">
+                                            <strong>{{notification.get_user(notification.user_id).username}}</strong>
+                                        </button><i> shared</i> your <button class="btn p-0"
+                                            style="font-family: Arial, Helvetica, sans-serif;"
+                                            onclick="location.href='/profile/{{current_user.id}}#post-{{notification.post_id}}'"></button>>
+                                        <strong>post</strong>
+                                        </button>
+                                    </div>
+                                    {% else %}
+                                    <div class="card-title mt-2"><button class="btn p-0"
+                                            style="font-family: Arial, Helvetica, sans-serif;"
+                                            onclick="location.href='/profile/{{notification.user_id}}'">
+                                            <strong>{{notification.get_user(notification.user_id).username}}</strong>
+                                        </button><i> commented</i> on your <button class="btn p-0"
+                                            style="font-family: Arial, Helvetica, sans-serif;"
+                                            onclick="location.href='/profile/{{current_user.id}}#post-{{notification.post_id}}'">
+                                        <strong>post</strong>
+                                        </button>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td style="width:30%">
+                                {% if current_user != notification.get_user(notification.user_id) %}
+                                {% if current_user.is_following(notification.user_id) %}
+                                <button class="btn btn-danger unfollow-btn mt-2 ml-auto pl-3 pr-3"
+                                    data-user="{{notification.user_id}}"><strong>Unfollow</strong></button>
+                                {% else %}
+                                <button class="btn btn-primary follow-btn mt-2 ml-auto pl-3 pr-3"
+                                    data-user="{{notification.user_id}}"><strong>Follow</strong></button>
+                                {% endif %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        const dismissAll = document.getElementById("dismiss-all");
+        const notificationCards = document.querySelectorAll(".notification-card");
+
+        dismissAll.addEventListener("click", function (e) {
+            e.preventDefault();
+            notificationCards.forEach((card) => {
+                card.classList.add("display-none");
+            });
+            const row = document.querySelector(".notification-container");
+            const message = document.createElement("h4");
+            message.classList.add("text-center");
+            message.innerHTML = "All caught up!";
+            row.appendChild(message);
+
+            // Send DELETE request to delete all notifications for the current user
+            const userId = this.getAttribute('data-user'); // replace with the user ID of the current user
+            const url = `/notifications/${userId}`;
+
+            fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            }).then(function (response) {
+                if (response.ok) {
+                    console.log('All notifications deleted successfully');
+                } else {
+                    console.log('Failed to delete all notifications');
+                }
+            }).catch(function (error) {
+                console.log(error);
+            });
+        });
+    </script>
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="{{url_for('static',filename='javascript/home.js')}}"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>

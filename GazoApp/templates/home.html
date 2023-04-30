@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Gazo</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="https://img.icons8.com/color/48/null/drawing--v2.png">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/home.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <!-- Navbar for small devices -->
+    <nav class="navbar position-fixed navbar-light d-flex d-lg-none d-md-none d-xl-none mb-2 w-100">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#dfc" aria-controls="dfc"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="dropdown">
+            <ul class="dropdown-menu" id="dfc">
+                <li><a class="dropdown-item" href="/home/{{current_user.id}}">Home</a></li>
+                <li><a class="dropdown-item" href="/profile/{{current_user.id}}">Profile</a></li>
+                <li><a class="dropdown-item" href="/explore{{current_user.id}}">Explore</a></li>
+                <li><a class="dropdown-item" href="/post/{{current_user.id}}">New Post</a></li>
+                <li><a class="dropdown-item" href="/notifications/{{current_user.id}}">Notifications</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" data-toggle="modal" data-target="#logoutModal">Signout</a></li>
+            </ul>
+        </div>
+        <a class="navbar-brand mx-auto" href="#"><img src="https://img.icons8.com/color/48/null/drawing--v2.png"
+                style="margin-right: 10px;" /><strong>Gazo</strong></a>
+    </nav>
+
+    <!-- Vertical Navigation Bar -->
+    <div class="sidebar collapse show" id="sidebar">
+        <a href="#" style="padding-bottom: 20px;"><img src="https://img.icons8.com/color/48/null/drawing--v2.png"
+                style="margin-right: 10px;" /><strong>Gazo</strong></a>
+        <a href="/home/{{current_user.id}}"><i class="fa-solid fa-house-chimney" style="margin-right: 5px;"></i>Home</a>
+        <a href="/profile/{{current_user.id}}"><i class="fa-solid fa-user" style="margin-right: 5px;"></i>Profile</a>
+        <a href="/explore/{{current_user.id}}"><i class="fa-solid fa-compass" style="margin-right: 5px;"></i>Explore</a>
+        <a href="/post/{{current_user.id}}"><i class="fa-solid fa-circle-plus" style="margin-right: 5px;"></i>New
+            Post</a>
+        <a href="/notifications/{{current_user.id}}"><i class="fa-solid fa-message"
+                style="margin-right: 5px;"></i>Notifications</a>
+        <a class="signout" data-toggle="modal" data-target="#logoutModal">
+            <i class="fa-solid fa-right-to-bracket fa-rotate-180" style="margin-right: 5px;"></i>Signout
+        </a>
+    </div>
+
+
+    <!-- Logout Modal -->
+    <div class="modal" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Logout</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to logout?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <a href="/logout" type="button" class="btn btn-primary">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Main Content -->
+    <div class="main">
+        <div class="d-flex flex-column mt-4 mb-4">
+            {% if posts|length==0 %}
+            <h2>Welcome to Gazo!</h2>
+            <p>Follow some users to see exciting posts</p>
+            {% else %}
+            {% for post in posts %}
+            {% if post.get_original_post().user != current_user %}
+            {% if post.is_reshare=="True"%}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <div class="d-flex flex-row align-items-center">
+                        <button class="btn p-0 mr-1"
+                            onclick="location.href='/profile/{{post.get_original_post().user.id}}'">
+                            <div
+                                class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo">
+                                <img src="{{url_for('static', filename=post.get_original_post().user.profile_pic)}}"
+                                    alt="..." style="object-fit: cover; position: absolute; left: 0;">
+                            </div>
+                        </button>
+                        <button class="btn p-0" onclick="location.href='/profile/{{post.get_original_post().user.id}}'">
+                            <span class="font-weight-bold mr-2">{{post.get_original_post().user.username}}</span>
+                        </button>
+                        <span> (reshared by {{post.user.username}})</span>
+                        <div class="ml-auto">
+                            <button class="btn ai-analysis-btn" data-bs-toggle="modal" data-bs-target="#analysisModal"
+                                data-post-id="{{ post.id }}">
+                                <i class="fas fa-cog"></i> AI Analysis
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card-body p-0">
+                    <div class="img-frame">
+                        <img class="imgitem"
+                            src="{{url_for('static', filename=post.get_original_post().photo_path)}}"></img>
+                    </div>
+
+                    <div class="d-flex flex-row justify-content-between pl-3 pr-3 pt-3 pb-1">
+                        <ul class="list-inline d-flex flex-row align-items-center m-0">
+                            <li class="list-inline-item">
+                                {% if current_user.is_starred(post.get_original_post().id)%}
+                                <button class="btn p-0 star-btn starred" data-post="{{ post.get_original_post().id }}"
+                                    data-post-id="{{ post.id }}" post_user_id="{{ post.get_original_post().user.id}}">
+                                    <i class="fa-solid fa-star fa-lg" style="color: rgb(41, 156, 194);"></i>
+                                </button>
+                                {% else %}
+                                <button class="btn p-0 star-btn" data-post="{{ post.get_original_post().id }}"
+                                    data-post-id="{{ post.id }}" post_user_id="{{ post.get_original_post().user.id}}">
+                                    <i class="fa-regular fa-star fa-lg"></i>
+                                </button>
+                                {% endif %}
+                            </li>
+                            <li class="list-inline-item ml-2">
+                                <button class="btn p-0 cmt-btn" data-bs-toggle="modal"
+                                    data-post-id="{{ post.get_original_post().id }}" data-bs-target="
+                                                            #commentsModal"
+                                    post_user_id="{{ post.get_original_post().user.id}}">
+                                    <i class="fa-regular fa-comment fa-lg"></i>
+                                </button>
+                            </li>
+                            {% if current_user != post.get_original_post().user %}
+                            <li class="list-inline-item ml-2">
+                                {% if current_user.is_reshared(post.get_original_post().id)%}
+                                <button class="btn p-0 reshare-btn reshared"
+                                    data-post="{{ post.get_original_post().id }}" data-post-id="{{post.id}}"
+                                    post_user_id="{{ post.get_original_post().user.id}}">
+                                    <i class="fa-solid fa-retweet fa-lg" style="color: rgb(41, 156, 194);"></i>
+                                </button>
+                                {% else %}
+                                <button class="btn p-0 reshare-btn" data-post="{{ post.get_original_post().id }}"
+                                    data-post-id="{{post.id}}" post_user_id="{{ post.get_original_post().user.id}}">
+                                    <i class="fa-solid fa-retweet fa-lg"></i>
+                                </button>
+                                {% endif %}
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+
+                    <div class="pl-3 pr-3 pb-2">
+
+                        <strong class="star-count-{{post.id}}">{{post.get_original_post().starrows|length}}
+                        </strong> stars and
+                        <strong class="reshare-count-{{post.id}}">{{post.get_original_post().resharerows|length}}
+                        </strong> reshares
+                        <p class="d-block mb-1"><b>Description:</b> {{post.get_original_post().description}}</p>
+
+                        <button class="btn p-0 cmt-btn" data-bs-toggle="modal" data-bs-target="#commentsModal"
+                            data-post-id="{{ post.get_original_post().id }}"
+                            post_user_id="{{ post.get_original_post().user.id}}">
+                            {% if post.get_original_post().commentrows|length == 0 %}
+                            <span class="text-muted">No comments yet!</span>
+                            {% elif post.get_original_post().commentrows|length == 1 %}
+                            <span class="text-muted">View comment</span>
+                            {% else %}
+                            <span class="text-muted">View all {{
+                                post.get_original_post().commentrows|length }}
+                                comments</span>
+                            {% endif %}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <div class="d-flex flex-row align-items-center">
+                        <button class="btn p-0 mr-1" onclick="location.href='/profile/{{post.user.id}}'">
+                            <div
+                                class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo">
+                                <img src="{{url_for('static', filename=post.user.profile_pic)}}" alt="..."
+                                    style="object-fit: cover; position: absolute; left: 0;">
+                            </div>
+                        </button>
+                        <button class="btn p-0" onclick="location.href='/profile/{{post.user.id}}'">
+                            <span class="font-weight-bold">{{post.user.username}}</span>
+                        </button>
+                        <div class="ml-auto">
+                            <button class="btn ai-analysis-btn" data-bs-toggle="modal" data-bs-target="#analysisModal"
+                                data-post-id="{{ post.id }}">
+                                <i class="fas fa-cog"></i> AI Analysis
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card-body p-0">
+                    <div class="img-frame">
+                        <img class="imgitem" src="{{url_for('static', filename=post.photo_path)}}"></img>
+                    </div>
+
+                    <div class="d-flex flex-row justify-content-between pl-3 pr-3 pt-3 pb-1">
+                        <ul class="list-inline d-flex flex-row align-items-center m-0">
+                            <li class="list-inline-item">
+                                {% if current_user.is_starred(post.id)%}
+                                <button class="btn p-0 star-btn starred" data-post="{{ post.id }}"
+                                    data-post-id="{{ post.id }}" post_user_id="{{ post.user.id}}">
+                                    <i class="fa-solid fa-star fa-lg" style="color: rgb(41, 156, 194);"></i>
+                                </button>
+                                {% else %}
+                                <button class="btn p-0 star-btn" data-post="{{ post.id }}" data-post-id="{{ post.id }}"
+                                    post_user_id="{{ post.user.id}}">
+                                    <i class="fa-regular fa-star fa-lg"></i>
+                                </button>
+                                {% endif %}
+                            </li>
+                            <li class="list-inline-item ml-2">
+                                <button class="btn p-0 cmt-btn" data-bs-toggle="modal" data-post-id="{{ post.id }}"
+                                    data-bs-target="#commentsModal" post_user_id="{{ post.user.id}}">
+                                    <i class="fa-regular fa-comment fa-lg"></i>
+                                </button>
+                            </li>
+                            {% if current_user != post.user %}
+                            <li class="list-inline-item ml-2">
+                                {% if current_user.is_reshared(post.id)%}
+                                <button class="btn p-0 reshare-btn reshared" data-post="{{ post.id }}"
+                                    data-post-id="{{post.id}}" post_user_id="{{ post.user.id}}">
+                                    <i class="fa-solid fa-retweet fa-lg" style="color: rgb(41, 156, 194);"></i>
+                                </button>
+                                {% else %}
+                                <button class="btn p-0 reshare-btn" data-post="{{ post.id }}" data-post-id="{{post.id}}"
+                                    post_user_id="{{ post.user.id}}">
+                                    <i class="fa-solid fa-retweet fa-lg"></i>
+                                </button>
+                                {% endif %}
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+
+                    <div class="pl-3 pr-3 pb-2">
+                        <strong class="star-count-{{post.id}}">{{post.starrows|length}}
+                        </strong> stars and
+                        <strong class="reshare-count-{{post.id}}">{{post.resharerows|length}}
+                        </strong> reshares
+                        <p class="d-block mb-1" style="border-color: black;"><b>Description:</b>
+                            {{post.description}}</p>
+                        <button class="btn p-0 cmt-btn" data-bs-toggle="modal" data-bs-target="#commentsModal"
+                            data-post-id="{{ post.id }}" post_user_id="{{ post.user.id}}">
+                            {% if post.commentrows|length == 0 %}
+                            <span class="text-muted">No comments yet!</span>
+                            {% elif post.commentrows|length == 1 %}
+                            <span class="text-muted">View comment</span>
+                            {% else %}
+                            <span class="text-muted">View all {{ post.commentrows|length }}
+                                comments</span>
+                            {% endif %}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- END OF POSTS -->
+    </div>
+    <!-- Comments Modal -->
+    <div class="modal" id="commentsModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="commentsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="commentsModalLabel">Comments</h5>
+                    <button type="button" id="closeModalBtn" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" id="addANote" class="form-control" placeholder="Add comment...">
+                            <button type="submit" class="btn btn-primary" id="postCommentBtn">Post</button>
+                        </div>
+                    </div>
+                    <div class="comments-list mt-3">
+                        <!--Dynamically comments are appended here-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI analysis modal -->
+    <div class="modal" id="analysisModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="analysisModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="analysisModalLabel">AI Analysis</h5>
+                    <button type="button" id="closeModalBtn" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="notes-list mt-0">
+                        <!--Dynamically analysis notes are appended here-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="{{url_for('static',filename='javascript/home.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>
